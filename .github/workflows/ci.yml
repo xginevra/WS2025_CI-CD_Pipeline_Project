@@ -22,7 +22,7 @@ jobs:
 
       - name: Install dependencies + tools
         run: |
-          npm install
+          npm ci
           npm install -g pa11y lychee
 
       - name: 1️⃣ Linting (ESLint + Prettier)
@@ -31,17 +31,23 @@ jobs:
       - name: 2️⃣ Accessibility (pa11y WCAG AA)
         run: |
           pa11y --standard WCAG2AA \
-            index.html \
-            about.html \
-            projects.html \
-            book.html
+            "file://$(pwd)/index.html" \
+            "file://$(pwd)/about.html" \
+            "file://$(pwd)/projects.html" \
+            "file://$(pwd)/book.html"
+
+      - name: Serve static files for Lighthouse
+        uses: peaceiris/actions-http-server@v1
+        with:
+          port: 8080
+          args: '.'
 
       - name: 3️⃣ Performance (Lighthouse)
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            index.html
-            book.html
+            http://localhost:8080/index.html
+            http://localhost:8080/book.html
 
       - name: 4️⃣ Link checker (lychee)
         uses: lycheeverse/lychee-action@v1
