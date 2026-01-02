@@ -14,12 +14,12 @@ export default [
       ecmaVersion: 2021,
       sourceType: "module",
       globals: {
-        ...globals.browser
-      }
+        ...globals.browser,
+      },
     },
     rules: {
       "no-unused-vars": "warn",
-      "no-console": "off"
-    }
-  }
+      "no-console": "off",
+    },
+  },
 ];

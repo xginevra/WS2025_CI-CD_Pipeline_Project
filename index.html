@@ -1,53 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CI/CD Demo Site – Home</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
-</head>
-<body>
-  <div class="site-wrapper">
-    <header class="site-header">
-      <nav class="navbar">
-        <div class="navbar-brand">WS2025 CI/CD DEMO</div>
-        <div class="navbar-links">
-          <a href="index.html" class="active">Home</a>
-          <a href="about.html">About</a>
-          <a href="projects.html">Projects</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CI/CD Demo Site – Home</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="site-wrapper">
+      <header class="site-header">
+        <nav class="navbar">
+          <div class="navbar-brand">WS2025 CI/CD DEMO</div>
+          <div class="navbar-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="about.html">About</a>
+            <a href="projects.html">Projects</a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="site-main">
+        <section class="hero">
+          <div class="card">
+            <p data-greeting></p>
+            <h1>Welcome to the CI/CD Pipeline Demo</h1>
+            <p>
+              This small multi-page website is used to demonstrate a continuous
+              integration and continuous deployment pipeline built with GitHub Actions.
+            </p>
+            <p>
+              Changes to this repository will automatically trigger the pipeline to build,
+              test, and deploy the latest version of the site.
+            </p>
+            <a class="button" href="about.html">Learn more about the pipeline</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer-inner">
+          &copy; <span id="year"></span> CI/CD Demo. Built for WS2025.
         </div>
-      </nav>
-    </header>
+      </footer>
+    </div>
 
-    <main class="site-main">
-      <section class="hero">
-        <div class="card">
-          <p data-greeting></p>
-          <h1>Welcome to the CI/CD Pipeline Demo</h1>
-          <p>
-            This small multi-page website is used to demonstrate a continuous integration
-            and continuous deployment pipeline built with GitHub Actions.
-          </p>
-          <p>
-            Changes to this repository will automatically trigger the pipeline to build,
-            test, and deploy the latest version of the site.
-          </p>
-          <a class="button" href="about.html">Learn more about the pipeline</a>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="site-footer-inner">
-        &copy; <span id="year"></span> CI/CD Demo. Built for WS2025.
-      </div>
-    </footer>
-  </div>
-
-  <script src="assets/js/main.js"></script>
-  <script>
-    // Simple year injection so there is a tiny bit more JS
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-</body>
+    <script src="assets/js/main.js"></script>
+    <script>
+      // Simple year injection so there is a tiny bit more JS
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
 </html>

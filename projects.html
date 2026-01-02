@@ -1,63 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CI/CD Demo Site – Projects</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
-</head>
-<body>
-  <div class="site-wrapper">
-    <header class="site-header">
-      <nav class="navbar">
-        <div class="navbar-brand">WS2025 CI/CD DEMO</div>
-        <div class="navbar-links">
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="projects.html" class="active">Projects</a>
-        </div>
-      </nav>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CI/CD Demo Site – Projects</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="site-wrapper">
+      <header class="site-header">
+        <nav class="navbar">
+          <div class="navbar-brand">WS2025 CI/CD DEMO</div>
+          <div class="navbar-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="projects.html" class="active">Projects</a>
+          </div>
+        </nav>
+      </header>
 
-    <main class="site-main">
-      <section class="page-section">
-        <div class="card">
-          <h1>Demo “Projects”</h1>
-          <p>
-            These cards describe what the CI/CD pipeline will eventually do for this
-            repository.
-          </p>
+      <main class="site-main">
+        <section class="page-section">
+          <div class="card">
+            <h1>Demo “Projects”</h1>
+            <p>
+              These cards describe what the CI/CD pipeline will eventually do for this
+              repository.
+            </p>
 
-          <div class="grid grid-2">
-            <div>
-              <h2>Continuous Integration</h2>
-              <p>
-                On every push or pull request, GitHub Actions will run automated
-                workflows that can validate HTML/CSS/JS and perform basic checks.
-              </p>
-            </div>
-            <div>
-              <h2>Continuous Deployment</h2>
-              <p>
-                When changes are merged into the main branch, the site will be
-                automatically deployed to a static hosting target such as GitHub Pages.
-              </p>
+            <div class="grid grid-2">
+              <div>
+                <h2>Continuous Integration</h2>
+                <p>
+                  On every push or pull request, GitHub Actions will run automated
+                  workflows that can validate HTML/CSS/JS and perform basic checks.
+                </p>
+              </div>
+              <div>
+                <h2>Continuous Deployment</h2>
+                <p>
+                  When changes are merged into the main branch, the site will be
+                  automatically deployed to a static hosting target such as GitHub Pages.
+                </p>
+              </div>
             </div>
           </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer-inner">
+          &copy; <span id="year"></span> CI/CD Demo. Built for WS2025.
         </div>
-      </section>
-    </main>
+      </footer>
+    </div>
 
-    <footer class="site-footer">
-      <div class="site-footer-inner">
-        &copy; <span id="year"></span> CI/CD Demo. Built for WS2025.
-      </div>
-    </footer>
-  </div>
-
-  <script src="assets/js/main.js"></script>
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-</body>
+    <script src="assets/js/main.js"></script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
 </html>
