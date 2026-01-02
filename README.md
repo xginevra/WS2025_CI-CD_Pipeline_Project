@@ -6,7 +6,7 @@
 ## Pipeline Flow
 
 ```
-Push/PR ──→ CI (lint & prettier) ── ✅ ──→ CD (deploy) ──→ Live site
+Push/PR ──→ CI (test) ── ✅ ──→ CD (deploy) ──→ Live site
                      │              ↑
                     ❌             
                      |              |
