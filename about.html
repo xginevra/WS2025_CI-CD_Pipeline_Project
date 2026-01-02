@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CI/CD Demo Site – Home</title>
+  <title>CI/CD Demo Site – About</title>
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
@@ -12,27 +12,29 @@
       <nav class="navbar">
         <div class="navbar-brand">WS2025 CI/CD DEMO</div>
         <div class="navbar-links">
-          <a href="index.html" class="active">Home</a>
-          <a href="about.html">About</a>
+          <a href="index.html">Home</a>
+          <a href="about.html" class="active">About</a>
           <a href="projects.html">Projects</a>
         </div>
       </nav>
     </header>
 
     <main class="site-main">
-      <section class="hero">
+      <section class="page-section">
         <div class="card">
-          <p data-greeting></p>
-          <h1>Welcome to the CI/CD Pipeline Demo</h1>
+          <h1>About this project</h1>
           <p>
-            This small multi-page website is used to demonstrate a continuous integration
-            and continuous deployment pipeline built with GitHub Actions.
+            This repository is part of an exam project focused on building and explaining
+            a simple CI/CD pipeline.
           </p>
           <p>
-            Changes to this repository will automatically trigger the pipeline to build,
-            test, and deploy the latest version of the site.
+            The goal is to show how every push to the main branch triggers automated
+            checks and deployment of this static website.
           </p>
-          <a class="button" href="about.html">Learn more about the pipeline</a>
+          <p>
+            The pipeline uses GitHub Actions workflows stored under the
+            <code>.github/workflows</code> directory.
+          </p>
         </div>
       </section>
     </main>
@@ -46,7 +48,6 @@
 
   <script src="assets/js/main.js"></script>
   <script>
-    // Simple year injection so there is a tiny bit more JS
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
