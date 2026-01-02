@@ -31,10 +31,10 @@ jobs:
       - name: 2️⃣ Accessibility (pa11y WCAG AA)
         run: |
           pa11y --standard WCAG2AA \
-            "file://$(pwd)/index.html" \
-            "file://$(pwd)/about.html" \
-            "file://$(pwd)/projects.html" \
-            "file://$(pwd)/book.html"
+            ./index.html \
+            ./about.html \
+            ./projects.html \
+            ./book.html
 
       - name: 3️⃣ Start server + Lighthouse
         run: |
