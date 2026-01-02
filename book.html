@@ -18,22 +18,30 @@
         margin-bottom: 0.5rem;
         font-weight: 600;
       }
+      .form-group select option {
+        background: #1e293b; /* Dark option background */
+        color: #f9fafb; /* White option text */
+      }
       .form-group input,
       .form-group select,
       .form-group textarea {
         width: 100%;
         padding: 0.75rem;
-        border: 2px solid rgba(148, 163, 184, 0.3);
+        border: 1px solid rgba(148, 163, 184, 0.35);
         border-radius: 8px;
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--text-main);
+        background: rgba(15, 23, 42, 0.8); /* Semi-transparent dark */
+        color: #f9fafb; /* White text */
         font-size: 1rem;
+        transition: all 0.2s;
       }
+
       .form-group input:focus,
-      .form-group select:focus {
+      .form-group select:focus,
+      .form-group textarea:focus {
         outline: none;
         border-color: var(--accent);
         box-shadow: 0 0 0 3px rgba(110, 231, 183, 0.2);
+        background: rgba(15, 23, 42, 1); /* Solid dark on focus */
       }
 
       /* Calendar Styles */
