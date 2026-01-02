@@ -1,66 +1,71 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Healthcare Portal – Features</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
-</head>
-<body>
-  <div class="site-wrapper">
-    <header class="site-header">
-      <nav class="navbar">
-        <div class="navbar-brand">HEALTH APPOINTMENTS</div>
-        <div class="navbar-links">
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="projects.html">Features</a>
-          <a href="book.html">Book</a>
-        </div> 
-      </nav>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Healthcare Portal – Features</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="site-wrapper">
+      <header class="site-header">
+        <nav class="navbar">
+          <div class="navbar-brand">HEALTH APPOINTMENTS</div>
+          <div class="navbar-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="projects.html">Features</a>
+            <a href="book.html">Book</a>
+          </div>
+        </nav>
+      </header>
 
-    <main class="site-main">
-      <section class="page-section">
-        <div class="card">
-          <h1>Healthcare Features</h1>
-          <p>Patient-facing appointment system with CI/CD automation.</p>
+      <main class="site-main">
+        <section class="page-section">
+          <div class="card">
+            <h1>Healthcare Features</h1>
+            <p>Patient-facing appointment system with CI/CD automation.</p>
 
-          <div class="grid grid-2">
-            <div>
-              <h2>🏥 Patient Booking</h2>
-              <p>CI validates HTML forms for secure patient data entry and appointment scheduling.</p>
-            </div>
-            <div>
-              <h2>👨‍⚕️ Doctor Availability</h2>
-              <p>CD automatically deploys doctor schedule updates to production CDN.</p>
-            </div>
-            <div>
-              <h2>✅ Quality Gates</h2>
-              <p>ESLint + Prettier ensure production-ready code on every change.</p>
-            </div>
-            <div>
-              <h2>⚡ Zero-Downtime</h2>
-              <p>GitHub Pages CDN delivers updates worldwide in ~2 minutes.</p>
-            </div>
-            <div>
-              <h2>📅 Book Appointment</h2>
-              <p>Interactive booking form with slot selection and confirmation.</p>
-              <a href="book.html" class="button">Try Booking</a>
+            <div class="grid grid-2">
+              <div>
+                <h2>🏥 Patient Booking</h2>
+                <p>
+                  CI validates HTML forms for secure patient data entry and appointment
+                  scheduling.
+                </p>
+              </div>
+              <div>
+                <h2>👨‍⚕️ Doctor Availability</h2>
+                <p>CD automatically deploys doctor schedule updates to production CDN.</p>
+              </div>
+              <div>
+                <h2>✅ Quality Gates</h2>
+                <p>ESLint + Prettier ensure production-ready code on every change.</p>
+              </div>
+              <div>
+                <h2>⚡ Zero-Downtime</h2>
+                <p>GitHub Pages CDN delivers updates worldwide in ~2 minutes.</p>
+              </div>
+              <div>
+                <h2>📅 Book Appointment</h2>
+                <p>Interactive booking form with slot selection and confirmation.</p>
+                <a href="book.html" class="button">Try Booking</a>
+              </div>
             </div>
           </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer-inner">
+          &copy; <span id="year"></span> Healthcare Demo | WS2025 CI/CD Pipeline
         </div>
-      </section>
-    </main>
+      </footer>
+    </div>
 
-    <footer class="site-footer">
-      <div class="site-footer-inner">
-        &copy; <span id="year"></span> Healthcare Demo | WS2025 CI/CD Pipeline
-      </div>
-    </footer>
-  </div>
-
-  <script src="assets/js/main.js"></script>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
-</body>
+    <script src="assets/js/main.js"></script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
 </html>

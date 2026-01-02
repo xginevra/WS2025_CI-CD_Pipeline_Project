@@ -1,53 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Healthcare Portal – About</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
-</head>
-<body>
-  <div class="site-wrapper">
-    <header class="site-header">
-      <nav class="navbar">
-        <div class="navbar-brand">HEALTH APPOINTMENTS</div>
-        <div class="navbar-links">
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="projects.html">Features</a>
-          <a href="book.html">Book</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Healthcare Portal – About</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="site-wrapper">
+      <header class="site-header">
+        <nav class="navbar">
+          <div class="navbar-brand">HEALTH APPOINTMENTS</div>
+          <div class="navbar-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="projects.html">Features</a>
+            <a href="book.html">Book</a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="site-main">
+        <section class="page-section">
+          <div class="card">
+            <h1>Healthcare IT Project</h1>
+            <p>
+              Developed to demonstrate
+              <strong>DevOps CI/CD + Agile methodology</strong> for healthcare appointment
+              management.
+            </p>
+            <p>
+              Focus: Automated quality assurance and deployment for patient-facing
+              healthcare applications.
+            </p>
+            <ul>
+              <li><strong>CI</strong>: ESLint + Prettier on every change</li>
+              <li><strong>CD</strong>: Auto-deploy to GitHub Pages CDN</li>
+              <li><strong>Agile</strong>: Iterative development sprints</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer-inner">
+          &copy; <span id="year"></span> Healthcare Demo | WS2025 CI/CD Pipeline
         </div>
+      </footer>
+    </div>
 
-      </nav>
-    </header>
-
-    <main class="site-main">
-      <section class="page-section">
-        <div class="card">
-          <h1>Healthcare IT Project</h1>
-          <p>
-            Developed to demonstrate <strong>DevOps CI/CD + Agile methodology</strong> for healthcare appointment management.
-          </p>
-          <p>
-            Focus: Automated quality assurance and deployment for patient-facing healthcare applications.
-          </p>
-          <ul>
-            <li><strong>CI</strong>: ESLint + Prettier on every change</li>
-            <li><strong>CD</strong>: Auto-deploy to GitHub Pages CDN</li>
-            <li><strong>Agile</strong>: Iterative development sprints</li>
-          </ul>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="site-footer-inner">
-        &copy; <span id="year"></span> Healthcare Demo | WS2025 CI/CD Pipeline
-      </div>
-    </footer>
-  </div>
-
-  <script src="assets/js/main.js"></script>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
-</body>
+    <script src="assets/js/main.js"></script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
 </html>

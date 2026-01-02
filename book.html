@@ -1,151 +1,233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Healthcare Portal – Book Appointment</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <style>
-    .booking-form { max-width: 600px; margin: 0 auto; }
-    .form-group { margin-bottom: 1.5rem; }
-    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
-    .form-group input, .form-group select, .form-group textarea { 
-      width: 100%; padding: 0.75rem; border: 2px solid rgba(148, 163, 184, 0.3); 
-      border-radius: 8px; background: rgba(255,255,255,0.1); color: var(--text-main);
-      font-size: 1rem; 
-    }
-    .form-group input:focus, .form-group select:focus { 
-      outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(110,231,183,0.2);
-    }
-    
-    /* Calendar Styles */
-    .calendar-container { background: var(--surface); border-radius: 16px; padding: 1.5rem; margin: 1rem 0; border: 1px solid rgba(148, 163, 184, 0.35); }
-    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-    .calendar-title { font-size: 1.2rem; font-weight: 700; }
-    .calendar-nav { background: rgba(110,231,183,0.2); border: none; color: var(--text-main); padding: 0.5rem 1rem; border-radius: 999px; cursor: pointer; }
-    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; text-align: center; }
-    .calendar-day { padding: 0.75rem 0.25rem; border-radius: 8px; cursor: pointer; transition: all 0.2s; font-weight: 500; }
-    .calendar-day:hover { background: rgba(110,231,183,0.3); transform: translateY(-1px); }
-    .calendar-day.today { background: linear-gradient(135deg, var(--accent), #3b82f6); color: #0b1120; }
-    .calendar-day.selected { background: linear-gradient(135deg, #3b82f6, #1e40af); color: white; box-shadow: 0 4px 12px rgba(59,130,246,0.4); }
-    .calendar-day.unavailable { opacity: 0.4; cursor: not-allowed; }
-    .selected-date { background: rgba(110,231,183,0.2); padding: 0.75rem; border-radius: 8px; margin-top: 1rem; font-weight: 600; }
-    
-    .confirmation { background: rgba(34,197,94,0.2); border: 2px solid var(--accent); padding: 1.5rem; border-radius: 12px; margin-top: 1rem; display: none; }
-  </style>
-</head>
-<body>
-  <div class="site-wrapper">
-    <header class="site-header">
-      <nav class="navbar">
-        <div class="navbar-brand">HEALTH APPOINTMENTS</div>
-        <div class="navbar-links">
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="projects.html">Features</a>
-          <a href="book.html" class="active">Book</a>
-        </div>
-      </nav>
-    </header>
-
-    <main class="site-main">
-      <section class="page-section">
-        <div class="card booking-form">
-          <h1>Book Appointment</h1>
-          <p>Select your preferred date from the calendar below.</p>
-
-          <form id="bookingForm">
-            <div class="form-group">
-              <label for="service">Service</label>
-              <select id="service" required>
-                <option value="">Select service</option>
-                <option value="general">General Checkup</option>
-                <option value="dental">Dental</option>
-                <option value="cardio">Cardiology</option>
-                <option value="pediatric">Pediatric</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="doctor">Doctor</label>
-              <select id="doctor" required>
-                <option value="">Select doctor</option>
-                <option value="dr-smith">Dr. Smith (General)</option>
-                <option value="dr-jones">Dr. Jones (Dental)</option>
-                <option value="dr-lee">Dr. Lee (Cardiology)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Select Appointment Date</label>
-              <div class="calendar-container" id="calendar">
-                <!-- JS generates calendar -->
-              </div>
-              <div class="selected-date" id="selectedDate" style="display: none;">
-                📅 Selected: <span id="dateDisplay"></span>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="name">Full Name</label>
-              <input type="text" id="name" required placeholder="John Doe" />
-            </div>
-
-            <div class="form-group">
-              <label for="phone">Phone</label>
-              <input type="tel" id="phone" required placeholder="+49 (123) 456-7890" />
-            </div>
-
-            <div class="form-group">
-              <label for="notes">Notes</label>
-              <textarea id="notes" rows="3" placeholder="Any special requirements?"></textarea>
-            </div>
-
-            <button type="submit" class="button" id="submitBtn" disabled>Confirm Booking</button>
-          </form>
-
-          <div class="confirmation" id="confirmation">
-            <h2>✅ Appointment Confirmed!</h2>
-            <p id="confirmDetails"></p>
-            <p><em>Thank you! We'll call to confirm within 24 hours.</em></p>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="site-footer-inner">
-        &copy; <span id="year"></span> Healthcare Demo | WS2025 CI/CD Pipeline
-      </div>
-    </footer>
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('bookingForm');
-      const calendar = document.getElementById('calendar');
-      const selectedDateEl = document.getElementById('selectedDate');
-      const dateDisplay = document.getElementById('dateDisplay');
-      const submitBtn = document.getElementById('submitBtn');
-      const confirmation = document.getElementById('confirmation');
-      
-      let selectedDate = null;
-      const today = new Date();
-      today.setHours(0,0,0,0);
-
-      // Generate 14-day calendar (2 weeks)
-      const days = [];
-      for (let i = 0; i < 14; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() + i);
-        days.push(date);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Healthcare Portal – Book Appointment</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+      .booking-form {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid rgba(148, 163, 184, 0.3);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-main);
+        font-size: 1rem;
+      }
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(110, 231, 183, 0.2);
       }
 
-      // Days of week
-      const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      /* Calendar Styles */
+      .calendar-container {
+        background: var(--surface);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+      }
+      .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+      .calendar-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+      .calendar-nav {
+        background: rgba(110, 231, 183, 0.2);
+        border: none;
+        color: var(--text-main);
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.5rem;
+        text-align: center;
+      }
+      .calendar-day {
+        padding: 0.75rem 0.25rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-weight: 500;
+      }
+      .calendar-day:hover {
+        background: rgba(110, 231, 183, 0.3);
+        transform: translateY(-1px);
+      }
+      .calendar-day.today {
+        background: linear-gradient(135deg, var(--accent), #3b82f6);
+        color: #0b1120;
+      }
+      .calendar-day.selected {
+        background: linear-gradient(135deg, #3b82f6, #1e40af);
+        color: white;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+      }
+      .calendar-day.unavailable {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .selected-date {
+        background: rgba(110, 231, 183, 0.2);
+        padding: 0.75rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        font-weight: 600;
+      }
 
-      // Header
-      calendar.innerHTML = `
+      .confirmation {
+        background: rgba(34, 197, 94, 0.2);
+        border: 2px solid var(--accent);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-top: 1rem;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site-wrapper">
+      <header class="site-header">
+        <nav class="navbar">
+          <div class="navbar-brand">HEALTH APPOINTMENTS</div>
+          <div class="navbar-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="projects.html">Features</a>
+            <a href="book.html" class="active">Book</a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="site-main">
+        <section class="page-section">
+          <div class="card booking-form">
+            <h1>Book Appointment</h1>
+            <p>Select your preferred date from the calendar below.</p>
+
+            <form id="bookingForm">
+              <div class="form-group">
+                <label for="service">Service</label>
+                <select id="service" required>
+                  <option value="">Select service</option>
+                  <option value="general">General Checkup</option>
+                  <option value="dental">Dental</option>
+                  <option value="cardio">Cardiology</option>
+                  <option value="pediatric">Pediatric</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="doctor">Doctor</label>
+                <select id="doctor" required>
+                  <option value="">Select doctor</option>
+                  <option value="dr-smith">Dr. Smith (General)</option>
+                  <option value="dr-jones">Dr. Jones (Dental)</option>
+                  <option value="dr-lee">Dr. Lee (Cardiology)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Select Appointment Date</label>
+                <div class="calendar-container" id="calendar">
+                  <!-- JS generates calendar -->
+                </div>
+                <div class="selected-date" id="selectedDate" style="display: none">
+                  📅 Selected: <span id="dateDisplay"></span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" required placeholder="John Doe" />
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" required placeholder="+49 (123) 456-7890" />
+              </div>
+
+              <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea
+                  id="notes"
+                  rows="3"
+                  placeholder="Any special requirements?"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="button" id="submitBtn" disabled>
+                Confirm Booking
+              </button>
+            </form>
+
+            <div class="confirmation" id="confirmation">
+              <h2>✅ Appointment Confirmed!</h2>
+              <p id="confirmDetails"></p>
+              <p><em>Thank you! We'll call to confirm within 24 hours.</em></p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer-inner">
+          &copy; <span id="year"></span> Healthcare Demo | WS2025 CI/CD Pipeline
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("bookingForm");
+        const calendar = document.getElementById("calendar");
+        const selectedDateEl = document.getElementById("selectedDate");
+        const dateDisplay = document.getElementById("dateDisplay");
+        const submitBtn = document.getElementById("submitBtn");
+        const confirmation = document.getElementById("confirmation");
+
+        let selectedDate = null;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Generate 14-day calendar (2 weeks)
+        const days = [];
+        for (let i = 0; i < 14; i++) {
+          const date = new Date(today);
+          date.setDate(today.getDate() + i);
+          days.push(date);
+        }
+
+        // Days of week
+        const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+        // Header
+        calendar.innerHTML = `
         <div class="calendar-header">
           <button class="calendar-nav" onclick="changeWeek(-1)">← Prev</button>
           <div class="calendar-title">This Week</div>
@@ -154,75 +236,82 @@
         <div class="calendar-grid" id="dayGrid"></div>
       `;
 
-      function renderCalendar() {
-        const grid = document.getElementById('dayGrid');
-        let html = '';
-        
-        dayNames.forEach(dayName => {
-          html += `<div class="calendar-day" style="font-weight:600; opacity:0.8;">${dayName}</div>`;
-        });
+        function renderCalendar() {
+          const grid = document.getElementById("dayGrid");
+          let html = "";
 
-        days.slice(0,7).forEach((date, i) => {
-          const dayNum = date.getDate();
-          const isToday = date.getTime() === today.getTime();
-          const className = isToday ? 'calendar-day today' : 'calendar-day';
-          
-          html += `<div class="calendar-day ${className}" data-date="${date.toISOString().split('T')[0]}" onclick="selectDate('${date.toISOString().split('T')[0]}', this)">
+          dayNames.forEach((dayName) => {
+            html += `<div class="calendar-day" style="font-weight:600; opacity:0.8;">${dayName}</div>`;
+          });
+
+          days.slice(0, 7).forEach((date, i) => {
+            const dayNum = date.getDate();
+            const isToday = date.getTime() === today.getTime();
+            const className = isToday ? "calendar-day today" : "calendar-day";
+
+            html += `<div class="calendar-day ${className}" data-date="${date.toISOString().split("T")[0]}" onclick="selectDate('${date.toISOString().split("T")[0]}', this)">
             ${dayNum}
           </div>`;
-        });
+          });
 
-        grid.innerHTML = html;
-      }
-
-      window.selectDate = (dateStr, el) => {
-        document.querySelectorAll('.calendar-day:not(.today)').forEach(d => d.classList.remove('selected'));
-        el.classList.add('selected');
-        selectedDate = dateStr;
-        dateDisplay.textContent = new Date(dateStr).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
-        selectedDateEl.style.display = 'block';
-        submitBtn.disabled = false;
-      };
-
-      window.changeWeek = (direction) => {
-        // Simple week navigation (shift days array)
-        const shift = direction * 7;
-        // Implementation left simple for demo
-        renderCalendar();
-      };
-
-      renderCalendar();
-
-      // Form submit
-      form.onsubmit = (e) => {
-        e.preventDefault();
-        if (!selectedDate) {
-          alert('Please select a date');
-          return;
+          grid.innerHTML = html;
         }
 
-        const formData = {
-          service: document.getElementById('service').value,
-          doctor: document.getElementById('doctor').value,
-          date: selectedDate,
-          name: document.getElementById('name').value,
-          phone: document.getElementById('phone').value,
-          notes: document.getElementById('notes').value
+        window.selectDate = (dateStr, el) => {
+          document
+            .querySelectorAll(".calendar-day:not(.today)")
+            .forEach((d) => d.classList.remove("selected"));
+          el.classList.add("selected");
+          selectedDate = dateStr;
+          dateDisplay.textContent = new Date(dateStr).toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          });
+          selectedDateEl.style.display = "block";
+          submitBtn.disabled = false;
         };
 
-        document.getElementById('confirmDetails').innerHTML = `
+        window.changeWeek = (direction) => {
+          // Simple week navigation (shift days array)
+          const shift = direction * 7;
+          // Implementation left simple for demo
+          renderCalendar();
+        };
+
+        renderCalendar();
+
+        // Form submit
+        form.onsubmit = (e) => {
+          e.preventDefault();
+          if (!selectedDate) {
+            alert("Please select a date");
+            return;
+          }
+
+          const formData = {
+            service: document.getElementById("service").value,
+            doctor: document.getElementById("doctor").value,
+            date: selectedDate,
+            name: document.getElementById("name").value,
+            phone: document.getElementById("phone").value,
+            notes: document.getElementById("notes").value,
+          };
+
+          document.getElementById("confirmDetails").innerHTML = `
           <strong>${formData.name}</strong><br>
           ${formData.doctor} – ${formData.service}<br>
           📅 <strong>${formData.date}</strong><br>
           📞 ${formData.phone}
         `;
 
-        form.style.display = 'none';
-        confirmation.style.display = 'block';
-      };
+          form.style.display = "none";
+          confirmation.style.display = "block";
+        };
 
-      document.getElementById("year").textContent = new Date().getFullYear();
-    });
-  </script>
-</body>
+        document.getElementById("year").textContent = new Date().getFullYear();
+      });
+    </script>
+  </body>
 </html>
