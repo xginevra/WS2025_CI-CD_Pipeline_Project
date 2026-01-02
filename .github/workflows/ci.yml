@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  lint-and-check:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,5 +23,27 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run linters
+      - name: 1️⃣ Linting (ESLint + Prettier)
         run: npm run lint
+
+      - name: 2️⃣ Accessibility (Pa11y WCAG AA)
+        uses: pa11y/action@v1
+        with:
+          args: |
+            --standard WCAG2AA 
+            index.html 
+            about.html 
+            projects.html 
+            book.html
+
+      - name: 3️⃣ Performance (Lighthouse)
+        uses: lighthouse-actions/lighthouse@v2
+        with:
+          urls: |
+            index.html
+            book.html
+
+      - name: 4️⃣ Link checker (Lychee)
+        uses: lycheeverse/lychee-action@v1
+        with:
+          args: --no-progress './**/*.html'
