@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies + tools
         run: |
           npm ci
-          npm install -g pa11y lychee http-server
+          npm install -g pa11y lychee
 
       - name: List HTML files (debug)
         run: find . -name "*.html" -type f || echo "No HTML files found"
@@ -31,24 +31,26 @@ jobs:
       - name: 1️⃣ Linting (ESLint + Prettier)
         run: npm run lint
 
-      - name: 2️⃣ Start server + Accessibility (pa11y) + 3️⃣ Performance (Lighthouse)
+      - name: 2️⃣ Start Python server + pa11y + Lighthouse
         run: |
-          # Start server in background
-          npx http-server . -p 8080 -c-1 &
+          # Start Python3 HTTP server (always available)
+          python3 -m http.server 8080 &
           SERVER_PID=$!
           echo "Server PID: $SERVER_PID"
           
-          # Wait for server
+          # Wait for server startup
           sleep 5
+          curl -f http://localhost:8080 || echo "Server not ready"
           
-          # Test pa11y on localhost
+          # pa11y accessibility
           pa11y --standard WCAG2AA \
             http://localhost:8080/index.html \
             http://localhost:8080/about.html \
             http://localhost:8080/projects.html \
             http://localhost:8080/book.html
           
-          # Test lighthouse on localhost
+          # Lighthouse performance
+          npm install -g lighthouse
           lighthouse http://localhost:8080/index.html http://localhost:8080/book.html \
             --output html \
             --output-path ./lighthouse-report.html \
@@ -58,7 +60,7 @@ jobs:
           # Kill server
           kill $SERVER_PID || true
 
-      - name: 4️⃣ Link checker (lychee)
+      - name: 3️⃣ Link checker (lychee)
         uses: lycheeverse/lychee-action@v1
         with:
           args: --no-progress './**/*.html'
