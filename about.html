@@ -1,54 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CI/CD Demo Site – About</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-  </head>
-  <body>
-    <div class="site-wrapper">
-      <header class="site-header">
-        <nav class="navbar">
-          <div class="navbar-brand">CICD</div>
-          <div class="navbar-links">
-            <a href="index.html">Home</a>
-            <a href="about.html" class="active">About</a>
-            <a href="projects.html">Projects</a>
-          </div>
-        </nav>
-      </header>
-
-      <main class="site-main">
-        <section class="page-section">
-          <div class="card">
-            <h1>About this project</h1>
-            <p>
-              This repository is part of an exam project focused on building and
-              explaining a simple CI/CD pipeline.
-            </p>
-            <p>
-              The goal is to show how every push to the main branch triggers automated
-              checks and deployment of this static website.
-            </p>
-            <p>
-              The pipeline uses GitHub Actions workflows stored under the
-              <code>.github/workflows</code> directory.
-            </p>
-          </div>
-        </section>
-      </main>
-
-      <footer class="site-footer">
-        <div class="site-footer-inner">
-          &copy; <span id="year"></span> CI/CD. Built for WS2025/26.
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Healthcare Portal – About</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="site-wrapper">
+    <header class="site-header">
+      <nav class="navbar">
+        <div class="navbar-brand">HEALTH APPOINTMENTS</div>
+        <div class="navbar-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Features</a>
+          <a href="book.html">Book</a>
         </div>
-      </footer>
-    </div>
 
-    <script src="assets/js/main.js"></script>
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-  </body>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      <section class="page-section">
+        <div class="card">
+          <h1>Healthcare IT Project</h1>
+          <p>
+            Developed to demonstrate <strong>DevOps CI/CD + Agile methodology</strong> for healthcare appointment management.
+          </p>
+          <p>
+            Focus: Automated quality assurance and deployment for patient-facing healthcare applications.
+          </p>
+          <ul>
+            <li><strong>CI</strong>: ESLint + Prettier on every change</li>
+            <li><strong>CD</strong>: Auto-deploy to GitHub Pages CDN</li>
+            <li><strong>Agile</strong>: Iterative development sprints</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        &copy; <span id="year"></span> Healthcare Demo | WS2025 CI/CD Pipeline
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
 </html>

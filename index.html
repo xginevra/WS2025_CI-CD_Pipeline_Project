@@ -1,54 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CI/CD implementation project</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-  </head>
-  <body>
-    <div class="site-wrapper">
-      <header class="site-header">
-        <nav class="navbar">
-          <div class="navbar-brand">CICD</div>
-          <div class="navbar-links">
-            <a href="index.html" class="active">Home</a>
-            <a href="about.html">About</a>
-            <a href="projects.html">Projects</a>
-          </div>
-        </nav>
-      </header>
-
-      <main class="site-main">
-        <section class="hero">
-          <div class="card">
-            <p data-greeting></p>
-            <h1>Welcome to this semester's project for CI/CD implementation</h1>
-            <p>
-              This could be any website developed by a team of some developers who aim to
-              make our lives better. We want to make sure the code is clean and free of
-              bugs, visible or invisible for the human eye.
-            </p>
-            <p>
-              Changes to this repository will automatically trigger the pipeline to build,
-              test, and deploy the latest version of the site.
-            </p>
-            <a class="button" href="about.html">Learn more about the pipeline</a>
-          </div>
-        </section>
-      </main>
-
-      <footer class="site-footer">
-        <div class="site-footer-inner">
-          &copy; <span id="year"></span> CI/CD. Built for WS2025.
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Healthcare Appointment Portal – Home</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="site-wrapper">
+    <header class="site-header">
+      <nav class="navbar">
+        <div class="navbar-brand">HEALTH APPOINTMENTS</div>
+        <div class="navbar-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Features</a>
+          <a href="book.html">Book</a>
         </div>
-      </footer>
-    </div>
 
-    <script src="assets/js/main.js"></script>
-    <script>
-      // Simple year injection so there is a tiny bit more JS
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-  </body>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      <section class="hero">
+        <div class="card">
+          <p data-greeting></p>
+          <h1>Healthcare Appointment Portal</h1>
+          <p>
+            Demo system for patient-doctor appointment booking with <strong>full CI/CD pipeline</strong>.
+          </p>
+          <p>
+            Every change automatically triggers quality checks and deploys to production.
+          </p>
+          <a class="button" href="projects.html">See healthcare features</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        &copy; <span id="year"></span> Healthcare Demo | WS2025 CI/CD Pipeline
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
 </html>
