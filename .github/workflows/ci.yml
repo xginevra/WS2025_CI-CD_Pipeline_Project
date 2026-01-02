@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies + tools
         run: |
           npm ci
-          npm install -g pa11y lychee
+          npm install -g pa11y lychee lighthouse
 
       - name: List HTML files (debug)
         run: find . -name "*.html" -type f || echo "No HTML files found"
@@ -31,37 +31,32 @@ jobs:
       - name: 1️⃣ Linting (ESLint + Prettier)
         run: npm run lint
 
-      - name: 2️⃣ Start Python server + pa11y + Lighthouse
+      - name: 2️⃣ Python server + pa11y + Lighthouse
         run: |
-          # Start Python3 HTTP server (always available)
           python3 -m http.server 8080 &
           SERVER_PID=$!
-          echo "Server PID: $SERVER_PID"
-          
-          # Wait for server startup
           sleep 5
-          curl -f http://localhost:8080 || echo "Server not ready"
-          
-          # pa11y accessibility
           pa11y --standard WCAG2AA \
             http://localhost:8080/index.html \
             http://localhost:8080/about.html \
             http://localhost:8080/projects.html \
             http://localhost:8080/book.html
-          
-          # Lighthouse performance
-          npm install -g lighthouse
           lighthouse http://localhost:8080/index.html http://localhost:8080/book.html \
             --output html \
             --output-path ./lighthouse-report.html \
             --only-categories=performance,accessibility,seo \
             --chrome-flags="--headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-extensions"
-          
-          # Kill server
           kill $SERVER_PID || true
-          continue-on-error: true  
+        continue-on-error: true
 
-      - name: 3️⃣ Link checker (lychee)
+      - name: 4️⃣ Link checker (lychee)
         uses: lycheeverse/lychee-action@v1
         with:
           args: --no-progress './**/*.html'
+
+      - name: Upload Lighthouse report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: lighthouse-report.html
