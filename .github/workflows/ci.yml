@@ -36,16 +36,17 @@ jobs:
             "file://$(pwd)/projects.html" \
             "file://$(pwd)/book.html"
 
-      - name: 3️⃣ Performance (Lighthouse)
+      - name: 3️⃣ Start server + Lighthouse
         run: |
-          lighthouse \
-            "file://$(pwd)/index.html" \
-            "file://$(pwd)/book.html" \
+          npx http-server . -p 8080 -c-1 &
+          SERVER_PID=$!
+          sleep 5  # Wait for server
+          lighthouse http://localhost:8080/index.html http://localhost:8080/book.html \
             --output html \
             --output-path ./lighthouse-report.html \
             --only-categories=performance,accessibility,seo \
-            --screen-sizes=1920x1080 \
-            --chrome-flags="--headless --no-sandbox --disable-gpu --disable-dev-shm-usage"
+            --chrome-flags="--headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-extensions --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-renderer-backgrounding"
+          kill $SERVER_PID || true
         continue-on-error: true
 
       - name: 4️⃣ Link checker (lychee)
