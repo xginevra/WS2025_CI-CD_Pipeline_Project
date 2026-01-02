@@ -23,31 +23,40 @@ jobs:
       - name: Install dependencies + tools
         run: |
           npm ci
-          npm install -g pa11y lychee lighthouse
+          npm install -g pa11y lychee http-server
+
+      - name: List HTML files (debug)
+        run: find . -name "*.html" -type f || echo "No HTML files found"
 
       - name: 1️⃣ Linting (ESLint + Prettier)
         run: npm run lint
 
-      - name: 2️⃣ Accessibility (pa11y WCAG AA)
+      - name: 2️⃣ Start server + Accessibility (pa11y) + 3️⃣ Performance (Lighthouse)
         run: |
-          pa11y --standard WCAG2AA \
-            ./index.html \
-            ./about.html \
-            ./projects.html \
-            ./book.html
-
-      - name: 3️⃣ Start server + Lighthouse
-        run: |
+          # Start server in background
           npx http-server . -p 8080 -c-1 &
           SERVER_PID=$!
-          sleep 5  # Wait for server
+          echo "Server PID: $SERVER_PID"
+          
+          # Wait for server
+          sleep 5
+          
+          # Test pa11y on localhost
+          pa11y --standard WCAG2AA \
+            http://localhost:8080/index.html \
+            http://localhost:8080/about.html \
+            http://localhost:8080/projects.html \
+            http://localhost:8080/book.html
+          
+          # Test lighthouse on localhost
           lighthouse http://localhost:8080/index.html http://localhost:8080/book.html \
             --output html \
             --output-path ./lighthouse-report.html \
             --only-categories=performance,accessibility,seo \
-            --chrome-flags="--headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-extensions --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-renderer-backgrounding"
+            --chrome-flags="--headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-extensions"
+          
+          # Kill server
           kill $SERVER_PID || true
-        continue-on-error: true
 
       - name: 4️⃣ Link checker (lychee)
         uses: lycheeverse/lychee-action@v1
