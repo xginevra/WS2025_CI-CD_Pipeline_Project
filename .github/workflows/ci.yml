@@ -20,20 +20,20 @@ jobs:
           node-version: "20"
           cache: "npm"
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies + tools
+        run: |
+          npm install
+          npm install -g pa11y lychee
 
       - name: 1️⃣ Linting (ESLint + Prettier)
         run: npm run lint
 
-      - name: 2️⃣ Accessibility (Pa11y)
-        uses: pa11y/action@v1
-        with:
-          args: |
-            --standard WCAG2AA 
-            index.html 
-            about.html 
-            projects.html 
+      - name: 2️⃣ Accessibility (pa11y WCAG AA)
+        run: |
+          pa11y --standard WCAG2AA \
+            index.html \
+            about.html \
+            projects.html \
             book.html
 
       - name: 3️⃣ Performance (Lighthouse)
@@ -43,7 +43,7 @@ jobs:
             index.html
             book.html
 
-      - name: 4️⃣ Link checker (Lychee)
+      - name: 4️⃣ Link checker (lychee)
         uses: lycheeverse/lychee-action@v1
         with:
           args: --no-progress './**/*.html'
