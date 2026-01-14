@@ -6,7 +6,8 @@
   "scripts": {
     "lint:js": "npx eslint assets/js/*.js",
     "lint:format": "npx prettier --check \"**/*.{html,css,js}\"",
-    "lint": "npm run lint:js && npm run lint:format"
+    "lint": "npm run lint:js && npm run lint:format",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
@@ -16,5 +17,14 @@
     "jest": "^30.2.0",
     "jsdom": "^27.4.0",
     "prettier": "^3.0.0"
+  },
+  "jest": {
+    "extensionsToTreatAsEsm": [".js"],
+    "globals": {
+      "ts-jest": {
+        "useESM": true
+      }
+    },
+    "testEnvironment": "jsdom"
   }
 }
