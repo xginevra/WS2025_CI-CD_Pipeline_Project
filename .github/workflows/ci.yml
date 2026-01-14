@@ -49,6 +49,9 @@ jobs:
           kill $SERVER_PID || true
         continue-on-error: true
 
+      - name: 3️⃣ Unit tests (Jest)
+        run: npm test
+
       - name: 4️⃣ Link checker (lychee)
         uses: lycheeverse/lychee-action@v1
         with:
